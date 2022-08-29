@@ -11,7 +11,8 @@ RUN apt-get -y update
 RUN apt-get -y upgrade
 
 #Basic tools
-RUN apt-get install --no-install-recommends --no-install-suggests -y bash cron certbot
+RUN apt-get install --no-install-recommends --no-install-suggests -y bash cron rsyslog 
+RUN apt-get install --no-install-recommends --no-install-suggests -y certbot
 
 #Small prep stuff
 RUN echo "set mouse-=a" > /root/.vimrc
@@ -20,7 +21,10 @@ RUN echo "set mouse-=a" > /root/.vimrc
 ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 #RUN and COPY
-RUN touch /var/log/cron.log
+RUN mkdir -p /opt/stateless
+#COPY container/rsyslog.conf /etc/rsyslog.conf
+COPY container/rsyslog.d.conf /etc/rsyslog.d/rsyslog.d.conf
+COPY container/start.sh /opt/stateless/start.sh
 
 #Dooyet
-CMD ["/usr/sbin/cron -f -L 15"]
+ENTRYPOINT ["/opt/stateless/start.sh"]
