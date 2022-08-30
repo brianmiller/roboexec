@@ -47,6 +47,9 @@ chmod -R 755 /opt/stateful/cron.monthly/* > /dev/null 2>&1
 chmod -R 755 /opt/stateful/scripts/* > /dev/null 2>&1
 touch /etc/default/locale
 
+# yep
+chmod o+w /dev/stdout
+
 # start rsyslog and cron
 /etc/init.d/rsyslog start
 /usr/sbin/cron -f
