@@ -15,15 +15,36 @@ ln -s /opt/stateful/cron.monthly /etc/cron.monthly
 
 ## rsyslog
 sed -i '/imklog/s/^/#/' /etc/rsyslog.conf
-rm /etc/rsyslog.d/50-default.conf
+rm /etc/rsyslog.d/50-default.conf > /dev/null 2>&1
 
 ## cron
 ln -sf /dev/stdout /var/log/cron.log
+if [ ! -d /opt/stateful/cron.d ]; then
+	mkdir -p /opt/stateful/cron.d
+fi
+if [ ! -d /opt/stateful/cron.hourly ]; then
+        mkdir -p /opt/stateful/cron.hourly
+fi
+if [ ! -d /opt/stateful/cron.daily ]; then
+        mkdir -p /opt/stateful/cron.daily
+fi
+if [ ! -d /opt/stateful/cron.weekly ]; then
+        mkdir -p /opt/stateful/cron.weekly
+fi
+if [ ! -d /opt/stateful/cron.monthly ]; then
+        mkdir -p /opt/stateful/cron.monthly
+fi
+if [ ! -d /opt/stateful/scripts ]; then
+        mkdir -p /opt/stateful/scripts
+fi
+
+
 chmod -R 755 /opt/stateful/cron.d/* > /dev/null 2>&1
 chmod -R 755 /opt/stateful/cron.hourly/* > /dev/null 2>&1
 chmod -R 755 /opt/stateful/cron.daily/* > /dev/null 2>&1
 chmod -R 755 /opt/stateful/cron.weekly/* > /dev/null 2>&1
 chmod -R 755 /opt/stateful/cron.monthly/* > /dev/null 2>&1
+chmod -R 755 /opt/stateful/scripts/* > /dev/null 2>&1
 touch /etc/default/locale
 
 # start rsyslog and cron

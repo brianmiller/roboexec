@@ -22,7 +22,6 @@ ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 #RUN and COPY
 RUN mkdir -p /opt/stateless
-#COPY container/rsyslog.conf /etc/rsyslog.conf
 COPY container/rsyslog.d.conf /etc/rsyslog.d/rsyslog.d.conf
 COPY container/start.sh /opt/stateless/start.sh
 
