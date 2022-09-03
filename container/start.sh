@@ -17,7 +17,7 @@ ln -s /opt/stateful/cron.monthly /etc/cron.monthly
 sed -i '/imklog/s/^/#/' /etc/rsyslog.conf
 rm /etc/rsyslog.d/50-default.conf > /dev/null 2>&1
 
-## cron
+## dirs
 ln -sf /dev/stdout /var/log/cron.log
 if [ ! -d /opt/stateful/cron.d ]; then
 	mkdir -p /opt/stateful/cron.d
@@ -37,15 +37,22 @@ fi
 if [ ! -d /opt/stateful/scripts ]; then
         mkdir -p /opt/stateful/scripts
 fi
+if [ ! -d /opt/stateful/ssh ]; then
+        mkdir -p /opt/stateful/ssh
+fi
 
-
+## perms
 chmod -R 755 /opt/stateful/cron.d/* > /dev/null 2>&1
 chmod -R 755 /opt/stateful/cron.hourly/* > /dev/null 2>&1
 chmod -R 755 /opt/stateful/cron.daily/* > /dev/null 2>&1
 chmod -R 755 /opt/stateful/cron.weekly/* > /dev/null 2>&1
 chmod -R 755 /opt/stateful/cron.monthly/* > /dev/null 2>&1
 chmod -R 755 /opt/stateful/scripts/* > /dev/null 2>&1
+chmod -R 700 /opt/stateful/ssh > /dev/null 2>&1
 touch /etc/default/locale
+
+## ssh
+ln -sf /opt/stateful/ssh /root/.ssh
 
 # yep
 chmod o+w /dev/stdout
