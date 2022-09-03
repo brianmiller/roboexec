@@ -11,7 +11,7 @@ RUN apt-get -y update
 RUN apt-get -y upgrade
 
 #Basic tools
-RUN apt-get install --no-install-recommends --no-install-suggests -y bash cron rsyslog vim net-tools iputils-ping wget curl
+RUN apt-get install --no-install-recommends --no-install-suggests -y bash cron rsyslog vim net-tools iputils-ping wget curl openssh-client rsync
 RUN apt-get install --no-install-recommends --no-install-suggests -y certbot dnsutils
 
 #Small prep stuff
